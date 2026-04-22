@@ -42,6 +42,9 @@ frappe.ui.form.on("OFX Import", {
             frm.set_value("ofx_period_start", null);
             frm.set_value("ofx_period_end", null);
             frm.set_value("ofx_currency", null);
+            frm.set_value("ofx_opening_balance", null);
+            frm.set_value("ofx_closing_balance", null);
+            frm.set_value("ofx_closing_balance_date", null);
         }
     },
 });

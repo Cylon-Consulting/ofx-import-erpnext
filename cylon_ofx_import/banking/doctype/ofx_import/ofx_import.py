@@ -54,6 +54,14 @@ class OFXImport(Document):
         if curdef and frappe.db.exists("Currency", curdef):
             self.ofx_currency = curdef
 
+        ledgerbal = meta.get("ledgerbal")
+        if ledgerbal is not None:
+            self.ofx_closing_balance = float(ledgerbal)
+            # OFX has no explicit opening balance tag; derive it as
+            # closing minus the net of the statement's transactions.
+            self.ofx_opening_balance = float(ledgerbal - meta.get("txn_net", 0))
+        self.ofx_closing_balance_date = parse_ofx_dtdate(meta.get("ledgerbal_dtasof"))
+
     def _check_acctid_match(self):
         if not (self.bank_account and self.ofx_acctid):
             return

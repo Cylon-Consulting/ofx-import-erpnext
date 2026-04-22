@@ -19,6 +19,9 @@
   "ofx_period_start",
   "ofx_period_end",
   "ofx_currency",
+  "ofx_opening_balance",
+  "ofx_closing_balance",
+  "ofx_closing_balance_date",
   "section_results",
   "transactions_created",
   "transactions_duplicate",
@@ -123,6 +126,29 @@
    "label": "OFX Currency",
    "options": "Currency",
    "read_only": 1
+  },
+  {
+   "fieldname": "ofx_opening_balance",
+   "fieldtype": "Currency",
+   "label": "Opening Balance",
+   "read_only": 1,
+   "options": "ofx_currency",
+   "description": "Derived as closing balance minus the net of non-zero STMTTRN amounts. Copy into the Bank Reconciliation Tool's Account Opening Balance field (which ERPNext normally derives from GL; this figure reflects the bank's own position at period start)."
+  },
+  {
+   "fieldname": "ofx_closing_balance",
+   "fieldtype": "Currency",
+   "label": "Closing Balance",
+   "read_only": 1,
+   "options": "ofx_currency",
+   "description": "From the OFX LEDGERBAL/BALAMT tag. Copy into the Bank Reconciliation Tool's Closing Balance as per Bank Statement field."
+  },
+  {
+   "fieldname": "ofx_closing_balance_date",
+   "fieldtype": "Date",
+   "label": "Closing Balance As Of",
+   "read_only": 1,
+   "description": "LEDGERBAL/DTASOF. Typically the statement end date."
   },
   {
    "fieldname": "section_results",

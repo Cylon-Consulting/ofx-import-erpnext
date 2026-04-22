@@ -12,6 +12,7 @@ we navigate the resulting ElementTree with plain `.find()` calls so
 this module is resilient to ofxtools API drift between versions.
 """
 
+from decimal import Decimal, InvalidOperation
 from io import BytesIO
 
 
@@ -44,6 +45,9 @@ def preview_ofx(file_bytes):
           "dtstart": str,      # BANKTRANLIST/DTSTART (raw YYYYMMDD[HHMMSS])
           "dtend": str,        # BANKTRANLIST/DTEND
           "txn_count": int,    # number of STMTTRN nodes (pre-filter)
+          "ledgerbal": Decimal | None,   # LEDGERBAL/BALAMT (closing balance)
+          "ledgerbal_dtasof": str | None, # LEDGERBAL/DTASOF raw
+          "txn_net": Decimal,  # sum of non-zero STMTTRN TRNAMT values
         }
     """
     from ofxtools.Parser import OFXTree
@@ -71,6 +75,16 @@ def preview_ofx(file_bytes):
 
     fi = root.find(".//SONRS/FI")
 
+    ledgerbal_elem = stmtrs.find("LEDGERBAL")
+    ledgerbal = _decimal(ledgerbal_elem, "BALAMT") if ledgerbal_elem is not None else None
+    ledgerbal_dtasof = _text(ledgerbal_elem, "DTASOF") if ledgerbal_elem is not None else None
+
+    txn_net = Decimal(0)
+    for stmttrn in transactions:
+        amt = _decimal(stmttrn, "TRNAMT")
+        if amt is not None:
+            txn_net += amt
+
     return {
         "acctid": _text(acctfrom, "ACCTID"),
         "bankid": _text(acctfrom, "BANKID"),
@@ -81,6 +95,9 @@ def preview_ofx(file_bytes):
         "dtstart": _text(banktranlist, "DTSTART") if banktranlist is not None else None,
         "dtend": _text(banktranlist, "DTEND") if banktranlist is not None else None,
         "txn_count": len(transactions),
+        "ledgerbal": ledgerbal,
+        "ledgerbal_dtasof": ledgerbal_dtasof,
+        "txn_net": txn_net,
     }
 
 
@@ -91,6 +108,16 @@ def _text(elem, tag):
     if child is None or child.text is None:
         return None
     return child.text.strip()
+
+
+def _decimal(elem, tag):
+    raw = _text(elem, tag)
+    if raw is None:
+        return None
+    try:
+        return Decimal(raw)
+    except InvalidOperation:
+        return None
 
 
 def parse_ofx_dtdate(s):
