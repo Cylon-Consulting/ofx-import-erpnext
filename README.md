@@ -61,7 +61,7 @@ parser:
 - **Standard Bank ACCTID normalisation:** the OFX file ships
   `1234567` but customers see `00-123-456-7` on printed statements.
   `acctid.normalise_acctid` strips non-digits + leading zeros on
-  both sides of the ACCTID match.
+  both sides of the match (OFX ACCTID vs Bank Account `bank_account_no`).
 - **DTPOSTED precision varies:** Nedbank/FNB/Standard use
   `YYYYMMDD`; Investec uses `YYYYMMDDHHMMSS`. `parse_ofx_dtdate`
   takes the first 8 digits only.

@@ -57,16 +57,16 @@ class OFXImport(Document):
     def _check_acctid_match(self):
         if not (self.bank_account and self.ofx_acctid):
             return
-        ba_number = frappe.db.get_value("Bank Account", self.bank_account, "account_number")
+        ba_number = frappe.db.get_value("Bank Account", self.bank_account, "bank_account_no")
         if not ba_number:
-            # Bank Account has no account_number yet — admin hasn't
+            # Bank Account has no bank_account_no yet — admin hasn't
             # filled it in. Accept anything; the first successful
             # import is the operator's implicit confirmation of
             # which OFX account maps to this row.
             return
         if normalise_acctid(self.ofx_acctid) != normalise_acctid(ba_number):
             frappe.throw(_(
-                "OFX ACCTID {0} does not match Bank Account {1} (account_number {2})."
+                "OFX ACCTID {0} does not match Bank Account {1} (bank_account_no {2})."
             ).format(self.ofx_acctid, self.bank_account, ba_number))
 
 

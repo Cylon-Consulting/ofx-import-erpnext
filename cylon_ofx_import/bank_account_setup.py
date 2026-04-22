@@ -8,7 +8,7 @@ given GL account and company, it's returned unchanged.
 
 Used standalone by consumers that already hold a Bank-type GL leaf
 account and want to surface it for bank-reconciliation workflows.
-The `bank` and `account_number` fields are optional on first create;
+The `bank` and `bank_account_no` fields are optional on first create;
 admins fill them in later via /desk/bank-account when they have the
 real details from the bank.
 """
@@ -57,7 +57,7 @@ def ensure_bank_account_doctype(company, gl_account, bank=None, acctid=None):
         "company": company,
         "is_company_account": 1,
         "bank": bank,
-        "account_number": acctid,
+        "bank_account_no": acctid,
     })
     doc.flags.ignore_permissions = True
     try:
