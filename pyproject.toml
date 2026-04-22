@@ -1,0 +1,24 @@
+[project]
+name = "cylon_ofx_import"
+version = "0.1.0"
+description = "OFX bank statement import for ERPNext v16. Handles OFX 1.0.x SGML (FNB, Standard Bank, Investec) and 2.0 XML (Nedbank) in one DocType; produces Bank Transaction rows ready for the native Bank Reconciliation Tool."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [
+    { name = "Cylon", email = "info@cylon.biz" },
+]
+
+dependencies = [
+    # Handles OFX 1.0.x SGML (unclosed tags, DATA:OFXSGML header) +
+    # 2.0 XML uniformly. Pure Python, MIT-licensed. Frappe Cloud
+    # installs this on app deploy via pip install .
+    "ofxtools>=0.9.5",
+]
+
+[build-system]
+requires = ["flit_core >=3.4,<4"]
+build-backend = "flit_core.buildapi"
+
+[tool.flit.module]
+name = "cylon_ofx_import"

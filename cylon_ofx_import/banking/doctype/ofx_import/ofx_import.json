@@ -1,0 +1,215 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2026-04-22 11:00:00",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "company",
+  "bank_account",
+  "column_break_setup",
+  "status",
+  "ofx_file",
+  "section_metadata",
+  "ofx_acctid",
+  "ofx_bankid",
+  "ofx_fi_org",
+  "column_break_metadata",
+  "ofx_period_start",
+  "ofx_period_end",
+  "ofx_currency",
+  "section_results",
+  "transactions_created",
+  "transactions_duplicate",
+  "column_break_results",
+  "transactions_skipped_zero",
+  "section_log",
+  "log"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "OFX-.YYYY.-.#####",
+   "default": "OFX-.YYYY.-.#####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1,
+   "in_list_view": 1,
+   "description": "Company that owns the bank account. User Permission scopes which Companies are selectable."
+  },
+  {
+   "fieldname": "bank_account",
+   "fieldtype": "Link",
+   "label": "Bank Account",
+   "options": "Bank Account",
+   "reqd": 1,
+   "in_list_view": 1,
+   "description": "Target Bank Account. Must belong to the selected Company and have is_company_account = 1."
+  },
+  {
+   "fieldname": "column_break_setup",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Pending\nProcessed\nFailed",
+   "default": "Pending",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "ofx_file",
+   "fieldtype": "Attach",
+   "label": "OFX File",
+   "reqd": 1,
+   "description": "OFX 1.0.x SGML or 2.0 XML file exported from your bank. Supports Nedbank, FNB, ABSA, Standard Bank, Investec."
+  },
+  {
+   "fieldname": "section_metadata",
+   "fieldtype": "Section Break",
+   "label": "OFX Metadata",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "ofx_acctid",
+   "fieldtype": "Data",
+   "label": "OFX ACCTID",
+   "read_only": 1,
+   "description": "Account number as encoded in the OFX file."
+  },
+  {
+   "fieldname": "ofx_bankid",
+   "fieldtype": "Data",
+   "label": "OFX BANKID",
+   "read_only": 1,
+   "description": "Diagnostic only. SA banks do not use standard routing numbers here (e.g. Nedbank sends NETBANK, Standard sends 00000001)."
+  },
+  {
+   "fieldname": "ofx_fi_org",
+   "fieldtype": "Data",
+   "label": "OFX FI / ORG",
+   "read_only": 1,
+   "description": "Financial institution identifier (only Investec of the four confirmed SA banks emits this)."
+  },
+  {
+   "fieldname": "column_break_metadata",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "ofx_period_start",
+   "fieldtype": "Date",
+   "label": "Statement Period Start",
+   "read_only": 1
+  },
+  {
+   "fieldname": "ofx_period_end",
+   "fieldtype": "Date",
+   "label": "Statement Period End",
+   "read_only": 1
+  },
+  {
+   "fieldname": "ofx_currency",
+   "fieldtype": "Link",
+   "label": "OFX Currency",
+   "options": "Currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_results",
+   "fieldtype": "Section Break",
+   "label": "Import Results",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "transactions_created",
+   "fieldtype": "Int",
+   "label": "Transactions Created",
+   "read_only": 1
+  },
+  {
+   "fieldname": "transactions_duplicate",
+   "fieldtype": "Int",
+   "label": "Transactions Skipped (duplicate FITID)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_results",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "transactions_skipped_zero",
+   "fieldtype": "Int",
+   "label": "Transactions Skipped (zero amount)",
+   "read_only": 1,
+   "description": "OFX files often carry BROUGHT/CARRIED FORWARD and other TRNAMT=0 placeholder rows; these are skipped."
+  },
+  {
+   "fieldname": "section_log",
+   "fieldtype": "Section Break",
+   "label": "Log",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "log",
+   "fieldtype": "Long Text",
+   "label": "Log",
+   "read_only": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-04-22 11:00:00",
+ "modified_by": "Administrator",
+ "module": "Banking",
+ "name": "OFX Import",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "Accounts Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "Accounts User",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
