@@ -1,9 +1,10 @@
 """Whitelisted OFX Import runner.
 
 Reads the file attached to an OFX Import doc, parses it with ofxtools,
-and creates Bank Transaction rows (docstatus=0) for every non-zero
+and creates submitted Bank Transaction rows for every non-zero
 STMTTRN, skipping any FITID that already exists for the target Bank
-Account (idempotent re-uploads).
+Account (idempotent re-uploads). Transactions are submitted so they
+appear in the Bank Reconciliation Tool immediately.
 
 Invoked via the OFX Import DocType's client-side Process button,
 which calls `process_ofx_import(docname)`.
@@ -142,6 +143,7 @@ def _run_import(doc):
         })
         bt.flags.ignore_permissions = True
         bt.insert()
+        bt.submit()
         created += 1
 
     log = "\n".join(lines) if lines else "OK"
