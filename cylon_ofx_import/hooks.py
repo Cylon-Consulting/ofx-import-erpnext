@@ -5,6 +5,8 @@ app_description = "OFX bank statement import for ERPNext v16 — handles OFX 1.0
 app_email = "info@cylon.biz"
 app_license = "MIT"
 
+required_apps = ["erpnext"]
+
 doctype_js = {
     "Bank Statement Import": "public/js/bank_statement_import.js",
 }
