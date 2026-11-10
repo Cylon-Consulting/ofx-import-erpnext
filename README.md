@@ -81,4 +81,4 @@ this app does not try to enforce any franchise/multi-tenant model.
 
 ## License
 
-MIT — see `license.txt`.
+Free to use, including by businesses for their own accounts. GNU GPL v3 with the Commons Clause: changes you share must stay under the same terms, and nobody may sell the software, or hosting or support services built on it. See `license.txt`.

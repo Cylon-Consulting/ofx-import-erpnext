@@ -3,7 +3,7 @@ name = "cylon_ofx_import"
 version = "0.1.0"
 description = "OFX bank statement import for ERPNext v16. Handles OFX 1.0.x SGML (FNB, Standard Bank, Investec) and 2.0 XML (Nedbank) in one DocType; produces Bank Transaction rows ready for the native Bank Reconciliation Tool."
 readme = "README.md"
-license = "MIT"
+license = { file = "license.txt" }
 requires-python = ">=3.10"
 authors = [
     { name = "Cylon", email = "info@cylon.biz" },
